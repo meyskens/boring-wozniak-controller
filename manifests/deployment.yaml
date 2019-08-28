@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boring-wozniak
+  labels:
+    app: boring-wozniak
+    release: boring-wozniak-server
+    heritage: oldy-manifests
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: boring-wozniak
+      release: boring-wozniak-server
+  template:
+    metadata:
+      labels:
+        app: boring-wozniak
+        release: boring-wozniak-server
+    spec:
+      volumes:
+        - name: boring-wozniak-volume
+          configMap:
+            name: boring-wozniak-file
+            items:
+              - key: index.html
+                path: index.html
+      containers:
+        - name: nginx
+          image: "nginx:1.17"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: boring-wozniak-volume
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: boring-wozniak
+  labels:
+    app: boring-wozniak
+    release: boring-wozniak-server
+    heritage: oldy-manifests
+spec:
+  type: tcp
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: boring-wozniak
+    release: boring-wozniak-server

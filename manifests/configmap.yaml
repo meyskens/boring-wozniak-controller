@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: boring-wozniak-volume
+  labels:
+    release: boring-wozniak-server
+data:
+  index.html: |
+    Hello there!
